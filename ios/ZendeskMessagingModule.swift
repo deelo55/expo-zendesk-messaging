@@ -124,9 +124,14 @@ public class ZendeskMessagingModule: Module {
         return
       }
       
-      rootController.present(viewController, animated: true) {
-        resolve("Messaging view opened successfully")
+      if let nav = rootController.navigationController {
+        nav.pushViewController(viewController, animated: true)
+      } else {
+        let nav = UINavigationController(rootViewController: viewController)
+        rootController.present(nav, animated: true, completion: nil)
       }
+      
+      resolve("Messaging view opened successfully")
     }
   }
   
